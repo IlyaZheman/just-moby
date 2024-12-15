@@ -1,30 +1,21 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
 namespace Game.Logic
 {
-    public class DraggableItem : BaseDraggableItem
+    public class DraggableItem : Item, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private RectTransform _rectTransform;
-        private Canvas _canvas;
-
-        private void Awake()
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            _rectTransform = GetComponent<RectTransform>();
+            UpdateCanvas();
+            RectTransform.SetParent(Canvas.transform);
         }
 
-        protected override void OnBeginRealDrag(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData)
         {
-            _canvas = transform.parent.GetComponentInParent<Canvas>();
-            transform.SetParent(_canvas.transform);
+            RectTransform.anchoredPosition += eventData.delta / Canvas.scaleFactor;
         }
 
-        protected override void OnRealDrag(PointerEventData eventData)
-        {
-            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
-        }
-
-        protected override void OnEndRealDrag(PointerEventData eventData)
+        public void OnEndDrag(PointerEventData eventData)
         {
         }
     }
