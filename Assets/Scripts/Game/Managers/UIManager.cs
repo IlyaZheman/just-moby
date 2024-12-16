@@ -5,10 +5,20 @@ namespace Game.Managers
 {
     public class UIManager : Singleton<UIManager>
     {
-        [SerializeField] private Transform overlay;
+        [Header("Right Part")]
+        [SerializeField] private RectTransform rightPart;
+        public RectTransform RightPart => rightPart;
+
+        [Header("Left Part")]
+        [SerializeField] private RectTransform holeRectTransform;
+        public RectTransform HoleRectTransform => holeRectTransform;
+
+        [Header("Bottom Part")]
         [SerializeField] private TMP_Text statusText;
 
-        public Transform Overlay => overlay;
+        [Header("Overlay")]
+        [SerializeField] private RectTransform overlay;
+        public RectTransform Overlay => overlay;
 
         public void SetStatus(string key)
         {

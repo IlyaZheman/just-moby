@@ -32,7 +32,7 @@ namespace Game.Logic
                 {
                     var item = Instantiate(itemPrefab, transform.parent.parent.parent, false);
                     item.RectTransform.position = transform.position;
-                    item.Init(Image.color);
+                    item.Init(Color);
 
                     eventData.pointerDrag = item.gameObject;
 

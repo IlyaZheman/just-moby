@@ -1201,6 +1201,7 @@ GameObject:
   - component: {fileID: 1582405035}
   - component: {fileID: 1582405036}
   - component: {fileID: 1582405037}
+  - component: {fileID: 1582405038}
   m_Layer: 0
   m_Name: ui_manager
   m_TagString: Untagged
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98bdf30a6ae43f6be37ecc41aa8ec01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggableItemPrefab: {fileID: 5292455300590228533, guid: b570eb6c4f5d7744089d9f249dfe718a, type: 3}
 --- !u!114 &1582405036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1318,8 +1320,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5623bc862aa2e34fb842d97d55cb270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlay: {fileID: 1587601255}
+  rightPart: {fileID: 1387320377}
+  holeRectTransform: {fileID: 1132645110}
   statusText: {fileID: 463242054}
+  overlay: {fileID: 1587601255}
 --- !u!114 &1582405037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1333,6 +1337,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localizationDataStorage: {fileID: 11400000, guid: 168efc0558a55394b91902ef66bf983f, type: 2}
+--- !u!114 &1582405038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582405030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f919217874794d6da98a251a79956d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1587601254
 GameObject:
   m_ObjectHideFlags: 0
