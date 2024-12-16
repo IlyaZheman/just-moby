@@ -1200,6 +1200,7 @@ GameObject:
   - component: {fileID: 1582405031}
   - component: {fileID: 1582405035}
   - component: {fileID: 1582405036}
+  - component: {fileID: 1582405037}
   m_Layer: 0
   m_Name: ui_manager
   m_TagString: Untagged
@@ -1317,9 +1318,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5623bc862aa2e34fb842d97d55cb270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localizationDataStorage: {fileID: 11400000, guid: 168efc0558a55394b91902ef66bf983f, type: 2}
   overlay: {fileID: 1587601255}
   statusText: {fileID: 463242054}
+--- !u!114 &1582405037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582405030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c1864d38054dbd9b17503717a54b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localizationDataStorage: {fileID: 11400000, guid: 168efc0558a55394b91902ef66bf983f, type: 2}
 --- !u!1 &1587601254
 GameObject:
   m_ObjectHideFlags: 0

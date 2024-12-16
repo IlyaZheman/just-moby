@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.Logic;
 using UnityEngine;
 
-namespace Game.Logic
+namespace Game.Managers
 {
     public class GameManager : Singleton<GameManager>
     {
@@ -69,8 +70,7 @@ namespace Game.Logic
             {
                 var lastRectTransform = _items.Last().RectTransform;
 
-                if (item.RectTransform.position.y - item.RectTransform.rect.height / 2 <
-                    lastRectTransform.position.y + lastRectTransform.rect.height / 2)
+                if (item.RectTransform.position.y < lastRectTransform.position.y + lastRectTransform.rect.height / 2)
                 {
                     return false;
                 }

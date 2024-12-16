@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Logic
+namespace Game.Managers
 {
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {

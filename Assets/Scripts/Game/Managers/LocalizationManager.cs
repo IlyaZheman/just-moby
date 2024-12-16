@@ -1,26 +1,14 @@
 ﻿using System.Linq;
 using Game.Data;
-using TMPro;
 using UnityEngine;
 
-namespace Game.Logic
+namespace Game.Managers
 {
-    public class UIManager : Singleton<UIManager>
+    public class LocalizationManager : Singleton<LocalizationManager>
     {
         [SerializeField] private LocalizationDataStorage localizationDataStorage;
 
-        [SerializeField] private Transform overlay;
-        [SerializeField] private TMP_Text statusText;
-
-        public Transform Overlay => overlay;
-
-        public void SetStatus(string key)
-        {
-            var localizedText = GetLocalizationData(key);
-            statusText.SetText(localizedText);
-        }
-
-        private string GetLocalizationData(string key)
+        public string GetLocalizationData(string key)
         {
             foreach (var data in localizationDataStorage.Data)
             {
