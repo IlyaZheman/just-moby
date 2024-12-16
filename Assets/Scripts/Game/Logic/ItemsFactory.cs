@@ -9,7 +9,7 @@ namespace Game.Logic
         [SerializeField] private StaticItem itemPrefab;
         [SerializeField] private Transform itemsContainer;
 
-        private void Awake()
+        private void Start()
         {
             GenerateItems();
         }

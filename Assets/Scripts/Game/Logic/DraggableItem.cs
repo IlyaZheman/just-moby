@@ -7,7 +7,8 @@ namespace Game.Logic
         public void OnBeginDrag(PointerEventData eventData)
         {
             UpdateCanvas();
-            RectTransform.SetParent(Canvas.transform);
+
+            GameManager.Instance.StartDrag(this);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -17,6 +18,7 @@ namespace Game.Logic
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            GameManager.Instance.EndDrag(this);
         }
     }
 }
