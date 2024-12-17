@@ -1,5 +1,6 @@
 ﻿using Game.Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Logic
 {
@@ -8,6 +9,7 @@ namespace Game.Logic
         [SerializeField] private ItemsDataStorage itemsDataStorage;
         [SerializeField] private StaticItem itemPrefab;
         [SerializeField] private Transform itemsContainer;
+        [SerializeField] private ScrollRect itemsScrollView;
 
         private void Start()
         {
@@ -20,6 +22,7 @@ namespace Game.Logic
             {
                 var item = Instantiate(itemPrefab, itemsContainer, false);
                 item.Init(itemData.Color);
+                item.SetScrollRect(itemsScrollView);
             }
         }
     }

@@ -27,6 +27,7 @@ namespace Game.Managers
 
             return;
 
+
             DraggableItem CreateDraggableItem(DraggableItemData data)
             {
                 var lastRectTransform = _items.Count > 0 ? _items.Last().RectTransform : UIManager.Instance.Overlay;
@@ -87,7 +88,7 @@ namespace Game.Managers
             }
 
             UIManager.Instance.SetStatus("destroy");
-            DestroyItem(item);
+            DestroyItem(item, true);
             ResetState();
         }
 
@@ -204,13 +205,20 @@ namespace Game.Managers
                     .Append(tempItem.RectTransform.DOScale(0f, 0.4f))
                     .Insert(0, tempItem.RectTransform.DOJump(targetPosition, 150f, 1, 0.5f))
                     .SetDelay(delay)
-                    .OnComplete(() => DestroyItem(tempItem));
+                    .OnComplete(() => DestroyItem(tempItem, false));
             }
         }
 
-        private void DestroyItem(DraggableItem item)
+        private void DestroyItem(DraggableItem item, bool withAnimation)
         {
-            Destroy(item.gameObject);
+            if (withAnimation)
+            {
+                item.RectTransform.DOScale(0, 0.4f).OnComplete(() => Destroy(item.gameObject));
+            }
+            else
+            {
+                Destroy(item.gameObject);
+            }
         }
 
         private void ResetState()
