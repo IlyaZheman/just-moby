@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultLanguage: 43
   data:
+  - key: ready
+    types:
+    - language: 30
+      text: "\u0413\u043E\u0442\u043E\u0432"
+    - language: 10
+      text: Ready
   - key: drag
     types:
     - language: 30

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace Game.Managers
@@ -15,10 +16,19 @@ namespace Game.Managers
 
         [Header("Bottom Part")]
         [SerializeField] private TMP_Text statusText;
+        public TMP_Text StatusText => statusText;
+
+        [SerializeField] private string defaultStatusTextKey;
+        public string DefaultStatusTextKey => defaultStatusTextKey;
 
         [Header("Overlay")]
         [SerializeField] private RectTransform overlay;
         public RectTransform Overlay => overlay;
+
+        private void Start()
+        {
+            StatusText.SetText(LocalizationManager.Instance.GetLocalizationData(DefaultStatusTextKey));
+        }
 
         public void SetStatus(string key)
         {

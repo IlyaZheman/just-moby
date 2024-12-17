@@ -10,9 +10,9 @@ namespace Game.Managers
     {
         [SerializeField] private DraggableItem draggableItemPrefab;
 
-        private List<DraggableItem> _items = new();
+        private readonly List<DraggableItem> _items = new();
 
-        private List<DraggableItem> _lastDraggingItems = null;
+        private List<DraggableItem> _lastDraggingItems;
         private Vector3 _lastItemPosition;
         private bool _isNew;
 
@@ -179,7 +179,33 @@ namespace Game.Managers
 
         private void DropInHole(DraggableItem item)
         {
-            //
+            if (_isNew)
+            {
+                SetAnimation(item, 0);
+            }
+            else
+            {
+                for (var i = _lastDraggingItems.Count - 1; i >= 0; i--)
+                {
+                    _lastDraggingItems[i].RectTransform.SetParent(UIManager.Instance.Overlay);
+                    _lastDraggingItems[i].RectTransform.SetAsLastSibling();
+                    SetAnimation(_lastDraggingItems[i], 0.15f * (_lastDraggingItems.Count - 1 - i));
+                }
+            }
+
+            return;
+
+
+            void SetAnimation(DraggableItem tempItem, float delay)
+            {
+                var targetPosition = UIManager.Instance.HoleRectTransform.position;
+                DOTween.Sequence()
+                    .Join(tempItem.RectTransform.DOScale(1.1f, 0.1f))
+                    .Append(tempItem.RectTransform.DOScale(0f, 0.4f))
+                    .Insert(0, tempItem.RectTransform.DOJump(targetPosition, 150f, 1, 0.5f))
+                    .SetDelay(delay)
+                    .OnComplete(() => DestroyItem(tempItem));
+            }
         }
 
         private void DestroyItem(DraggableItem item)

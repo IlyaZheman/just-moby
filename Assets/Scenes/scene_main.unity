@@ -1323,6 +1323,7 @@ MonoBehaviour:
   rightPart: {fileID: 1387320377}
   holeRectTransform: {fileID: 1132645110}
   statusText: {fileID: 463242054}
+  defaultStatusTextKey: ready
   overlay: {fileID: 1587601255}
 --- !u!114 &1582405037
 MonoBehaviour:
