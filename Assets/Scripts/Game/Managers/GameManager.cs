@@ -33,7 +33,7 @@ namespace Game.Managers
                 var lastRectTransform = _items.Count > 0 ? _items.Last().RectTransform : UIManager.Instance.Overlay;
 
                 var item = Instantiate(draggableItemPrefab, lastRectTransform, false);
-                item.transform.position = data.position;
+                item.RectTransform.anchoredPosition = data.position;
                 item.Init(data.color);
                 return item;
             }
@@ -57,7 +57,7 @@ namespace Game.Managers
                 _lastDraggingItems = _items.GetRange(itemIndex, _items.Count - itemIndex);
                 _items.RemoveRange(itemIndex, _items.Count - itemIndex);
 
-                _lastItemPosition = item.RectTransform.position;
+                _lastItemPosition = item.RectTransform.anchoredPosition;
             }
         }
 
@@ -135,19 +135,18 @@ namespace Game.Managers
                 if (useTargetPosition)
                 {
                     var targetPosition = new Vector2(
-                        item.RectTransform.position.x,
-                        lastRectTransform.position.y + lastRectTransform.rect.height / 2 +
-                        item.RectTransform.rect.height / 2);
-                    item.RectTransform.DOMove(targetPosition, 0.2f);
+                        lastRectTransform.InverseTransformPoint(item.RectTransform.position).x,
+                        lastRectTransform.rect.height / 2 + item.RectTransform.rect.height / 2);
+                    item.RectTransform.DOLocalMove(targetPosition, 0.2f);
                 }
                 else
                 {
-                    item.RectTransform.DOMove(_lastItemPosition, 0.2f);
+                    item.RectTransform.DOAnchorPos(_lastItemPosition, 0.2f);
                 }
             }
             else if (!useTargetPosition)
             {
-                item.RectTransform.DOMove(_lastItemPosition, 0.2f);
+                item.RectTransform.DOAnchorPos(_lastItemPosition, 0.2f);
             }
 
             if (_lastDraggingItems != null)

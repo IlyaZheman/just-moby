@@ -47,7 +47,7 @@ namespace Game.Managers
 
         public DraggableItemData(DraggableItem item)
         {
-            position = item.transform.position;
+            position = item.RectTransform.anchoredPosition;
             color = item.Color;
         }
     }

@@ -1186,6 +1186,7 @@ MonoBehaviour:
   itemsDataStorage: {fileID: 11400000, guid: ace3262dc4fc87c4c812daecce19f191, type: 2}
   itemPrefab: {fileID: 8399993419486496260, guid: 43c3add3bac071a4ab81ecda8e3a6ecc, type: 3}
   itemsContainer: {fileID: 1561919855}
+  itemsScrollView: {fileID: 548469108}
 --- !u!1 &1582405030
 GameObject:
   m_ObjectHideFlags: 0
