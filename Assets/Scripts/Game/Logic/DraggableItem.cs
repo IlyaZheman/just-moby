@@ -9,7 +9,7 @@ namespace Game.Logic
         {
             UpdateCanvas();
 
-            GameManager.Instance.StartDrag(this);
+            ItemsManager.Instance.StartDrag(this);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -19,7 +19,7 @@ namespace Game.Logic
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            GameManager.Instance.EndDrag(this);
+            ItemsManager.Instance.EndDrag(this);
         }
     }
 }

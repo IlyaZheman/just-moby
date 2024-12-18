@@ -6,7 +6,8 @@ namespace Game.Managers
 {
     public class LocalizationManager : Singleton<LocalizationManager>
     {
-        [SerializeField] private LocalizationDataStorage localizationDataStorage;
+        [SerializeField]
+        private LocalizationDataStorage localizationDataStorage;
 
         public string GetLocalizationData(string key)
         {

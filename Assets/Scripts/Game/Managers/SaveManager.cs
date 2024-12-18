@@ -55,7 +55,8 @@ namespace Game.Managers
     [Serializable]
     public class Serialization<T>
     {
-        [SerializeField] private List<T> target;
+        [SerializeField]
+        private List<T> target;
 
         public Serialization(List<T> target)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Game.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,8 +10,6 @@ namespace Game.Logic
         IPointerDownHandler, IPointerUpHandler,
         IDragHandler, IBeginDragHandler, IEndDragHandler
     {
-        [SerializeField] private DraggableItem itemPrefab;
-
         private ScrollRect _scrollRect;
         private IEnumerator _checkCoroutine;
 
@@ -45,7 +44,7 @@ namespace Game.Logic
 
                     ExecuteEvents.Execute(gameObject, eventData, ExecuteEvents.endDragHandler);
 
-                    var item = Instantiate(itemPrefab, transform.parent.parent.parent, false);
+                    var item = Instantiate(GameManager.Instance.DraggableItemPrefab, transform.parent.parent.parent);
                     item.RectTransform.position = transform.position;
                     item.Init(Color);
 
