@@ -8,22 +8,31 @@ namespace Game.Managers
 {
     public class ItemsManager : Singleton<ItemsManager>
     {
+        private UIManager _uiManager;
+        private GameManager _gameManager;
+
         private List<DraggableItem> _lastDraggingItems;
         private Vector3 _lastItemPosition;
         private bool _isNew;
 
+        protected override void Initialize()
+        {
+            _uiManager = UIManager.Instance;
+            _gameManager = GameManager.Instance;
+        }
+
         public void StartDrag(DraggableItem item)
         {
-            UIManager.Instance.SetStatus("drag");
+            _uiManager.SetStatus("drag");
 
-            item.RectTransform.SetParent(UIManager.Instance.Overlay);
+            item.RectTransform.SetParent(_uiManager.Overlay);
 
-            _isNew = !GameManager.Instance.Items.Contains(item);
+            _isNew = !_gameManager.Items.Contains(item);
             if (!_isNew)
             {
-                var itemIndex = GameManager.Instance.Items.IndexOf(item);
-                _lastDraggingItems = GameManager.Instance.Items.GetRange(itemIndex, GameManager.Instance.Items.Count - itemIndex);
-                GameManager.Instance.Items.RemoveRange(itemIndex, GameManager.Instance.Items.Count - itemIndex);
+                var itemIndex = _gameManager.Items.IndexOf(item);
+                _lastDraggingItems = _gameManager.Items.GetRange(itemIndex, _gameManager.Items.Count - itemIndex);
+                _gameManager.Items.RemoveRange(itemIndex, _gameManager.Items.Count - itemIndex);
 
                 _lastItemPosition = item.RectTransform.anchoredPosition;
             }
@@ -33,7 +42,7 @@ namespace Game.Managers
         {
             if (CanDropOnBoard(item))
             {
-                UIManager.Instance.SetStatus("drop_on_board");
+                _uiManager.SetStatus("drop_on_board");
                 DropOnBoard(item, true);
                 ResetState();
                 return;
@@ -41,7 +50,7 @@ namespace Game.Managers
 
             if (CanDropInHole(item))
             {
-                UIManager.Instance.SetStatus("drop_in_hole");
+                _uiManager.SetStatus("drop_in_hole");
                 DropInHole(item);
                 ResetState();
                 return;
@@ -49,25 +58,25 @@ namespace Game.Managers
 
             if (!_isNew)
             {
-                UIManager.Instance.SetStatus("drop_back");
+                _uiManager.SetStatus("drop_back");
                 DropOnBoard(item, false);
                 ResetState();
                 return;
             }
 
-            UIManager.Instance.SetStatus("destroy");
+            _uiManager.SetStatus("destroy");
             DestroyItem(item, true);
             ResetState();
         }
 
         private bool CanDropOnBoard(DraggableItem item)
         {
-            if (!IsItemInside(item, UIManager.Instance.RightPart))
+            if (!IsItemInside(item, _uiManager.RightPart))
                 return false;
 
-            if (GameManager.Instance.Items.Count > 0)
+            if (_gameManager.Items.Count > 0)
             {
-                var lastRectTransform = GameManager.Instance.Items.Last().RectTransform;
+                var lastRectTransform = _gameManager.Items.Last().RectTransform;
 
                 if (item.RectTransform.position.y < lastRectTransform.position.y + lastRectTransform.rect.height / 2)
                 {
@@ -95,9 +104,9 @@ namespace Game.Managers
 
         private void DropOnBoard(DraggableItem item, bool useTargetPosition)
         {
-            if (GameManager.Instance.Items.Count > 0)
+            if (_gameManager.Items.Count > 0)
             {
-                var lastRectTransform = GameManager.Instance.Items.Last().RectTransform;
+                var lastRectTransform = _gameManager.Items.Last().RectTransform;
 
                 item.RectTransform.SetParent(lastRectTransform);
                 if (useTargetPosition)
@@ -119,17 +128,17 @@ namespace Game.Managers
 
             if (_lastDraggingItems != null)
             {
-                GameManager.Instance.Items.AddRange(_lastDraggingItems);
+                _gameManager.Items.AddRange(_lastDraggingItems);
             }
             else
             {
-                GameManager.Instance.Items.Add(item);
+                _gameManager.Items.Add(item);
             }
         }
 
         private bool CanDropInHole(DraggableItem item)
         {
-            if (!IsObjectInsideHole(UIManager.Instance.HoleRectTransform, item.RectTransform))
+            if (!IsObjectInsideHole(_uiManager.HoleRectTransform, item.RectTransform))
                 return false;
 
             return true;
@@ -155,7 +164,7 @@ namespace Game.Managers
             {
                 for (var i = _lastDraggingItems.Count - 1; i >= 0; i--)
                 {
-                    _lastDraggingItems[i].RectTransform.SetParent(UIManager.Instance.Overlay);
+                    _lastDraggingItems[i].RectTransform.SetParent(_uiManager.Overlay);
                     _lastDraggingItems[i].RectTransform.SetAsLastSibling();
                     SetAnimation(_lastDraggingItems[i], 0.15f * (_lastDraggingItems.Count - 1 - i));
                 }
@@ -166,7 +175,7 @@ namespace Game.Managers
 
             void SetAnimation(DraggableItem tempItem, float delay)
             {
-                var targetPosition = UIManager.Instance.HoleRectTransform.position;
+                var targetPosition = _uiManager.HoleRectTransform.position;
                 DOTween.Sequence()
                     .Join(tempItem.RectTransform.DOScale(1.1f, 0.1f))
                     .Append(tempItem.RectTransform.DOScale(0f, 0.4f))

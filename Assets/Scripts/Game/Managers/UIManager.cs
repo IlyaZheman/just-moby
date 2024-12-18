@@ -38,14 +38,21 @@ namespace Game.Managers
         private RectTransform overlay;
         public RectTransform Overlay => overlay;
 
-        private void Start()
+        private LocalizationManager _localizationManager;
+
+        protected override void Initialize()
         {
-            StatusText.SetText(LocalizationManager.Instance.GetLocalizationData(DefaultStatusTextKey));
+            _localizationManager = LocalizationManager.Instance;
+        }
+
+        protected override void StartManager()
+        {
+            StatusText.SetText(_localizationManager.GetLocalizationData(DefaultStatusTextKey));
         }
 
         public void SetStatus(string key)
         {
-            var localizedText = LocalizationManager.Instance.GetLocalizationData(key);
+            var localizedText = _localizationManager.GetLocalizationData(key);
             statusText.SetText(localizedText);
         }
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Managers;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Logic
@@ -8,18 +9,19 @@ namespace Game.Logic
         public RectTransform RectTransform { get; protected set; }
         public Canvas Canvas { get; protected set; }
         public Vector4 Offsets { get; protected set; }
+        public Image Image { get; protected set; }
+        public Color Color => Image.color;
 
-        private Image _image;
-        public Color Color
-        {
-            get => _image.color;
-            protected set => _image.color = value;
-        }
+        protected GameManager GameManager;
+        protected ItemsManager ItemsManager;
 
         private void Awake()
         {
+            GameManager = GameManager.Instance;
+            ItemsManager = ItemsManager.Instance;
+
             RectTransform = GetComponent<RectTransform>();
-            _image = GetComponent<Image>();
+            Image = GetComponent<Image>();
             UpdateCanvas();
             Offsets = new Vector4(
                 RectTransform.rect.width / 2,
@@ -30,7 +32,7 @@ namespace Game.Logic
 
         public void Init(Color color)
         {
-            Color = color;
+            Image.color = color;
         }
 
         protected void UpdateCanvas()

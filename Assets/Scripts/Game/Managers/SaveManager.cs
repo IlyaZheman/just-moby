@@ -10,7 +10,7 @@ namespace Game.Managers
     {
         private string _saveFilePath;
 
-        protected override void InitializeManager()
+        protected override void Initialize()
         {
             _saveFilePath = Application.persistentDataPath + "/savefile.json";
         }

@@ -15,12 +15,21 @@ namespace Game.Managers
         [SerializeField]
         private StaticItem staticItemPrefab;
 
+        private UIManager _uiManager;
+        private SaveManager _saveManager;
+
         public DraggableItem DraggableItemPrefab => draggableItemPrefab;
         public StaticItem StaticItemPrefab => staticItemPrefab;
 
         public List<DraggableItem> Items { get; private set; } = new();
 
-        private void Start()
+        protected override void Initialize()
+        {
+            _uiManager = UIManager.Instance;
+            _saveManager = SaveManager.Instance;
+        }
+
+        protected override void StartManager()
         {
             SpawnStaticItems();
             SpawnDraggableItems();
@@ -30,18 +39,18 @@ namespace Game.Managers
         {
             foreach (var itemData in itemsDataStorage.Items)
             {
-                var item = Instantiate(StaticItemPrefab, UIManager.Instance.StaticItemsContainer);
+                var item = Instantiate(StaticItemPrefab, _uiManager.StaticItemsContainer);
                 item.Init(itemData.Color);
-                item.SetScrollRect(UIManager.Instance.ScrollRect);
+                item.SetScrollRect(_uiManager.ScrollRect);
             }
         }
 
         private void SpawnDraggableItems()
         {
-            var itemDataList = SaveManager.Instance.LoadItems();
+            var itemDataList = _saveManager.LoadItems();
             foreach (var itemData in itemDataList)
             {
-                var lastRectTransform = Items.Count > 0 ? Items.Last().RectTransform : UIManager.Instance.Overlay;
+                var lastRectTransform = Items.Count > 0 ? Items.Last().RectTransform : _uiManager.Overlay;
 
                 var item = Instantiate(DraggableItemPrefab, lastRectTransform);
                 item.RectTransform.anchoredPosition = itemData.position;
@@ -52,7 +61,7 @@ namespace Game.Managers
 
         private void OnApplicationQuit()
         {
-            SaveManager.Instance.SaveItems(Items);
+            _saveManager.SaveItems(Items);
         }
     }
 }

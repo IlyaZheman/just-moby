@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Game.Managers
 {
@@ -16,13 +17,20 @@ namespace Game.Managers
             {
                 Destroy(gameObject);
             }
-
-            // DontDestroyOnLoad(gameObject);
-
-            InitializeManager();
         }
 
-        protected virtual void InitializeManager()
+        private async void Start()
+        {
+            Initialize();
+            await Task.Yield();
+            StartManager();
+        }
+
+        protected virtual void Initialize()
+        {
+        }
+
+        protected virtual void StartManager()
         {
         }
     }

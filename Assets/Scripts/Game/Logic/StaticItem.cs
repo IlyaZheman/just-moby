@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Game.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -44,7 +43,7 @@ namespace Game.Logic
 
                     ExecuteEvents.Execute(gameObject, eventData, ExecuteEvents.endDragHandler);
 
-                    var item = Instantiate(GameManager.Instance.DraggableItemPrefab, transform.parent.parent.parent);
+                    var item = Instantiate(GameManager.DraggableItemPrefab, transform.parent.parent.parent);
                     item.RectTransform.position = transform.position;
                     item.Init(Color);
 
