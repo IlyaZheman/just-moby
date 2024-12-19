@@ -11,6 +11,8 @@ namespace Game.Managers
         [SerializeField]
         private ItemsDataStorage itemsDataStorage;
         [SerializeField]
+        private float beginDragAngle;
+        [SerializeField]
         private DraggableItem draggableItemPrefab;
         [SerializeField]
         private StaticItem staticItemPrefab;
@@ -18,6 +20,7 @@ namespace Game.Managers
         private UIManager _uiManager;
         private SaveManager _saveManager;
 
+        public float BeginDragAngle => beginDragAngle;
         public DraggableItem DraggableItemPrefab => draggableItemPrefab;
         public StaticItem StaticItemPrefab => staticItemPrefab;
 

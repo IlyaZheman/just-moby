@@ -83,14 +83,14 @@ namespace Game.Managers
             if (_gameManager.Items.Count > 0)
             {
                 var lastRectTransform = _gameManager.Items.Last().RectTransform;
+                var localPoint = lastRectTransform.InverseTransformPoint(item.RectTransform.position);
 
-                if (item.RectTransform.position.y < lastRectTransform.position.y + lastRectTransform.rect.height / 2)
+                if (localPoint.y < lastRectTransform.rect.height / 2)
                 {
                     return false;
                 }
 
-                if (item.RectTransform.position.x < lastRectTransform.position.x - lastRectTransform.rect.width / 2 ||
-                    item.RectTransform.position.x > lastRectTransform.position.x + lastRectTransform.rect.width / 2)
+                if (localPoint.x < -lastRectTransform.rect.width / 2 || localPoint.x > lastRectTransform.rect.width / 2)
                 {
                     return false;
                 }

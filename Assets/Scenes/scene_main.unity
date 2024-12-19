@@ -1021,6 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsDataStorage: {fileID: 11400000, guid: ace3262dc4fc87c4c812daecce19f191, type: 2}
+  beginDragAngle: 120
   draggableItemPrefab: {fileID: 5292455300590228533, guid: b570eb6c4f5d7744089d9f249dfe718a, type: 3}
   staticItemPrefab: {fileID: 8399993419486496260, guid: 43c3add3bac071a4ab81ecda8e3a6ecc, type: 3}
 --- !u!1 &1387320376

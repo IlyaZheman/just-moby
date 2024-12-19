@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ namespace Game.Logic
         private IEnumerator _checkCoroutine;
 
         private bool _isDraggingSlot;
+
+        private List<Vector2> _deltas = new();
 
         public void SetScrollRect(ScrollRect scrollRect)
         {
@@ -35,10 +38,15 @@ namespace Game.Logic
 
         private IEnumerator CheckDrag(PointerEventData eventData)
         {
+            _deltas = new List<Vector2>(3);
+
             while (true)
             {
-                if (eventData.delta.y > Mathf.Abs(eventData.delta.x))
+                if (_deltas.Count >= 3)
                 {
+                    if (_deltas.TrueForAll(delta => Vector2.Angle(delta, Vector2.up) > GameManager.BeginDragAngle / 2f))
+                        break;
+
                     _isDraggingSlot = true;
 
                     ExecuteEvents.Execute(gameObject, eventData, ExecuteEvents.endDragHandler);
@@ -48,7 +56,7 @@ namespace Game.Logic
                     item.Init(Color);
 
                     eventData.pointerDrag = item.gameObject;
-
+                    ExecuteEvents.Execute(eventData.pointerDrag, eventData, ExecuteEvents.beginDragHandler);
                     break;
                 }
 
@@ -65,6 +73,8 @@ namespace Game.Logic
         {
             if (!_isDraggingSlot)
             {
+                _deltas.Add(eventData.delta);
+
                 ExecuteEvents.Execute(_scrollRect.gameObject, eventData, ExecuteEvents.dragHandler);
             }
         }
