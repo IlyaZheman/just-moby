@@ -2,6 +2,7 @@
 using System.Linq;
 using DG.Tweening;
 using Game.Logic;
+using Game.Utils;
 using UnityEngine;
 
 namespace Game.Managers
@@ -21,11 +22,14 @@ namespace Game.Managers
             _gameManager = GameManager.Instance;
         }
 
+        public bool CanDrag(DraggableItem item)
+        {
+            return !DOTween.IsTweening(item.RectTransform);
+        }
+
         public void StartDrag(DraggableItem item)
         {
             _uiManager.SetStatus("drag");
-
-            item.RectTransform.SetParent(_uiManager.Overlay);
 
             _isNew = !_gameManager.Items.Contains(item);
             if (!_isNew)
@@ -36,6 +40,8 @@ namespace Game.Managers
 
                 _lastItemPosition = item.RectTransform.anchoredPosition;
             }
+
+            item.RectTransform.SetParent(_uiManager.Overlay);
         }
 
         public void EndDrag(DraggableItem item)
@@ -71,7 +77,7 @@ namespace Game.Managers
 
         private bool CanDropOnBoard(DraggableItem item)
         {
-            if (!IsItemInside(item, _uiManager.RightPart))
+            if (!item.IsItemInside(_uiManager.RightPart))
                 return false;
 
             if (_gameManager.Items.Count > 0)
@@ -91,15 +97,6 @@ namespace Game.Managers
             }
 
             return true;
-        }
-
-        private bool IsItemInside(DraggableItem item, RectTransform targetRectTransform)
-        {
-            return RectTransformUtility.RectangleContainsScreenPoint(
-                targetRectTransform,
-                item.RectTransform.position,
-                null,
-                item.Offsets);
         }
 
         private void DropOnBoard(DraggableItem item, bool useTargetPosition)
@@ -138,20 +135,7 @@ namespace Game.Managers
 
         private bool CanDropInHole(DraggableItem item)
         {
-            if (!IsObjectInsideHole(_uiManager.HoleRectTransform, item.RectTransform))
-                return false;
-
-            return true;
-        }
-
-        private static bool IsObjectInsideHole(RectTransform holeRectTransform, RectTransform rectTransform)
-        {
-            Vector2 localPosition = holeRectTransform.InverseTransformPoint(rectTransform.position);
-
-            // Уравнение эллипса: (x/a)^2 + (y/b)^2 <= 1
-            var normalizedX = localPosition.x / (holeRectTransform.rect.width / 2);
-            var normalizedY = localPosition.y / (holeRectTransform.rect.height / 2);
-            return (normalizedX * normalizedX + normalizedY * normalizedY) <= 1;
+            return item.RectTransform.IsObjectInsideHole(_uiManager.HoleRectTransform);
         }
 
         private void DropInHole(DraggableItem item)
